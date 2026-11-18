@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THAR FRONTIER: A SOLDIER'S PROMISE · 1971 | लोंगेवाला 1971</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-wrapper">
+        <!-- Phaser 3 Mount -->
+        <div id="game-container"></div>
+
+        <!-- Cinematic Letterbox Bars -->
+        <div class="letterbox-bar" id="letterbox-top"></div>
+        <div class="letterbox-bar" id="letterbox-bottom"></div>
+
+        <!-- Vintage Paper Vignette -->
+        <div class="vignette-overlay"></div>
+
+        <!-- Combat Danger Blood Pulse Overlay -->
+        <div id="danger-vignette" class="danger-vignette"></div>
+
+        <!-- Black Fade Screen Transition -->
+        <div id="fade-overlay"></div>
+
+        <!-- Top HUD Banner -->
+        <div class="hud-bar">
+            <div class="mission-tracker">
+                <div class="hud-chapter" id="hud-chapter">PROLOGUE: THE REVOKED HORIZON</div>
+                <div class="hud-mission" id="hud-mission">मिशन 1 – अंतिम यात्रा (The Last Journey)</div>
+                <div class="hud-objective" id="hud-objective">
+                    <strong>उद्देश्य:</strong> प्लेटफॉर्म पर टहलें और अपनी जेब से ट्रेन टिकट निकाल कर जाँचें।
+                </div>
+                <div class="waypoint-compass hidden" id="waypoint-compass">🎯</div>
+            </div>
+
+            <div class="hud-actions">
+                <a href="index.html" class="hud-btn" id="btn-download-pc" target="_blank" style="text-decoration: none; color: #ffd966; border-color: #d4af37; background: rgba(212,175,55,0.18); display: inline-flex; align-items: center; gap: 5px;">🌐 WEBSITE / DOWNLOAD PC APP</a>
+                <button class="hud-btn" id="btn-missions">📜 MISSIONS</button>
+                <button class="hud-btn" id="btn-audio">🔊 AUDIO: ON</button>
+                <button class="hud-btn" id="btn-fullscreen">⛶ FULLSCREEN</button>
+            </div>
+        </div>
+
+        <!-- Inventory Bar (Bottom Left) -->
+        <div class="inventory-bar" id="inventory-items"></div>
+
+        <!-- Controls Helper Guide (Bottom Right) -->
+        <div class="controls-guide" id="controls-guide">
+            <span class="ctrl-chip"><kbd>A</kbd><kbd>D</kbd> Walk</span>
+            <span class="ctrl-chip"><kbd>Shift</kbd> Run</span>
+            <span class="ctrl-chip"><kbd>Space</kbd> Jump</span>
+            <span class="ctrl-chip"><kbd>S</kbd> Crouch</span>
+            <span class="ctrl-chip combat-chip"><kbd>J</kbd> / <kbd>Click</kbd> 7.62mm SLR</span>
+            <span class="ctrl-chip combat-chip"><kbd>R</kbd> Reload</span>
+            <span class="ctrl-chip combat-chip"><kbd>F</kbd> Aim</span>
+            <span class="ctrl-chip combat-chip"><kbd>C</kbd> / <kbd>Q</kbd> Melee Strike</span>
+            <span class="ctrl-chip"><kbd>E</kbd> Interact</span>
+        </div>
+
+        <!-- Soldier Vitals & Tactical SLR Ammo HUD -->
+        <div id="tactical-vitals-hud">
+            <div class="vitals-header">
+                <span class="vitals-name">🇮🇳 HAV. DEVRATH</span>
+                <span class="vitals-regiment">23 PUNJAB</span>
+                <span class="cover-badge hidden" id="vitals-cover-badge">🛡️ COVER SAFE</span>
+            </div>
+            <div class="vitals-bar-wrap">
+                <div class="vitals-bar-fill" id="vitals-bar-fill" style="width: 100%;"></div>
+                <span class="vitals-bar-label" id="vitals-hp-label">HP 100%</span>
+            </div>
+            <div class="slr-ammo-row">
+                <span class="slr-label">7.62mm 1A1 SLR</span>
+                <span class="slr-rounds" id="slr-rounds-count">20 / 20</span>
+                <span class="slr-reload-btn" id="slr-reload-cue">[R] RELOAD</span>
+            </div>
+        </div>
+
+        <!-- Dynamic Interaction Prompt -->
+        <div id="interaction-prompt" class="hidden">
+            <span class="key-tag">E</span> Examine
+        </div>
+
+        <!-- Tactical Combat Overlay HUD (Missions 11-18) -->
+        <div id="combat-overlay-hud" class="hidden">
+            <div id="combat-hud-badge">106mm M40 RCL GUN</div>
+            <div id="ammo-wave-box" class="hidden">AMMO: 100%</div>
+            <div id="jam-meter-box" class="hidden">
+                <div class="meter-label" id="jam-label">SILICA SAND BUILDUP</div>
+                <div class="meter-track"><div id="jam-bar-fill"></div></div>
+                <div id="jam-qte-cue" class="hidden">⚠️ RIFLE JAMMED! PRESS <span>[R]</span> TO CLEAR BOLT!</div>
+            </div>
+        </div>
+
+        <!-- Shell-Shock Grounding Center Prompt (Mission 14) -->
+        <div id="grounding-box" class="hidden">
+            <div class="grounding-title">SHELL-SHOCK TRAUMA · FOCUS!</div>
+            <div class="grounding-prompt">HOLD <span>[E]</span> — Family Token & Tanot Mata Mitti</div>
+            <div class="meter-track"><div id="grounding-bar-fill"></div></div>
+        </div>
+
+        <!-- Dynamic Action Toast (RICOCHET! / DIRECT HIT! / ARTILLERY!) -->
+        <div id="action-toast" class="hidden">DIRECT HIT!</div>
+
+        <!-- Cinematic Title Card -->
+        <div id="title-card" class="hidden">
+            <div id="title-chapter">PROLOGUE: THE REVOKED HORIZON</div>
+            <div id="title-mission">मिशन 1 – अंतिम यात्रा</div>
+            <div id="title-sub">जैसलमेर रेलवे स्टेशन · 03 दिसंबर 1971</div>
+        </div>
+
+        <!-- Cinematic Dialogue Box with Character Portraits & Emotional Expressions -->
+        <div id="dialogue-box" class="hidden">
+            <div class="dialogue-portrait portrait-devrath" id="dialogue-portrait"></div>
+            <div class="dialogue-content">
+                <div class="dialogue-header">
+                    <div class="speaker-wrap">
+                        <span id="dialogue-speaker">हवलदार देवरथ सिंह</span>
+                        <span id="dialogue-rank">23 पंजाब रेजिमेंट</span>
+                    </div>
+                    <span class="dialogue-mood mood-soft" id="dialogue-mood">भावुक</span>
+                </div>
+                <div id="dialogue-hindi">बस कुछ ही घंटे... तीन साल बाद घर की चौखट देखूँगा।</div>
+                <div id="dialogue-sub">Just a few hours... After three years I will see my home.</div>
+                <div class="dialogue-prompt">PRESS [E] OR [SPACE] TO ADVANCE ▸</div>
+            </div>
+        </div>
+
+        <!-- Mother's Letter Modal (Parchment Paper Art) -->
+        <div class="modal-overlay hidden" id="letter-modal">
+            <div class="parchment-letter">
+                <div class="postmark">
+                    <span id="letter-postmark-1">POSTED</span>
+                    <span id="letter-postmark-2">01 DEC 1971</span>
+                    <span id="letter-postmark-3">SHEKHAWATI</span>
+                </div>
+                <img src="assets/pack/ui/maa_letter.png" alt="Maa Ki Chithi" class="letter-asset-img">
+                <div class="letter-title" id="letter-modal-title">माँ का आशीर्वाद (Mother's Blessing)</div>
+                <div class="letter-body" id="letter-modal-body">
+                    "चिरंजीव देवरथ...<br><br>
+                    तेरी बिटिया काव्या अब घुटनों के बल चलने लगी है। हर आहट पर दरवाज़े की तरफ देखती है, मानो जानती हो कि उसका बापू आने वाला है।<br><br>
+                    गाँव में सब कुशल है। बस मेरी आँखों में तेरी राह है बेटा... समय से घर पहुँचना, अपनी बिटिया को अपनी गोद में खिलाना।<br><br>
+                    — तेरी माँ"
+                </div>
+                <div class="letter-sub" id="letter-modal-sub">
+                    "My beloved Devrath, your little daughter Kavya has started crawling. She watches the door at every step, waiting for her father. Come home safely soon."
+                </div>
+                <button class="modal-close-btn" id="btn-close-letter">पत्र वापस जेब में रखें (Close Letter)</button>
+            </div>
+        </div>
+
+        <!-- Campaign Chapter & Mission Select Modal -->
+        <div class="modal-overlay hidden" id="campaign-modal">
+            <div class="campaign-card">
+                <div class="campaign-header">
+                    <div>
+                        <h2>🇮🇳 1971 BATTLE OF LONGEWALA — FULL CAMPAIGN</h2>
+                        <p>Prologue se Epilogue tak kisi bhi Chapter ya Mission par seedhe Deploy hon</p>
+                    </div>
+                    <button class="modal-close-btn campaign-close-top" id="btn-close-campaign">✕ RESUME</button>
+                </div>
+                <div class="campaign-grid" id="campaign-mission-grid"></div>
+            </div>
+        </div>
+
+        <!-- 1971 Train Ticket Modal -->
+        <div class="modal-overlay hidden" id="ticket-modal">
+            <div class="ticket-card">
+                <div class="ticket-cancelled-stamp hidden" id="ticket-cancelled-stamp">
+                    LEAVE CANCELLED
+                    <span>IMMEDIATE DUTY · 1971</span>
+                </div>
+                <div class="ticket-header">
+                    <h2>NORTHERN RAILWAY · भारतीय रेल</h2>
+                    <p style="font-size:12px;color:#555;">MILITARY LEAVE WARRANT TRAVEL PASS</p>
+                </div>
+                <div class="ticket-details">
+                    <div><strong>यात्री का नाम:</strong> हव. देवरथ सिंह</div>
+                    <div><strong>रेजिमेंट:</strong> 23 पंजाब (23 Punjab)</div>
+                    <div><strong>प्रस्थान (From):</strong> जैसलमेर (Jaisalmer)</div>
+                    <div><strong>गंतव्य (To):</strong> झुंझुनू (Jhunjhunu)</div>
+                    <div><strong>गाड़ी:</strong> 48 DN पैसेंजर</div>
+                    <div><strong>दिनांक:</strong> 03 दिसंबर 1971</div>
+                </div>
+                <p style="font-size:13px;color:#555;margin-bottom:16px;">
+                    छुट्टी की अवधि: 21 दिन (घर जाने की विशेष अनुमति)
+                </p>
+                <button class="modal-close-btn" id="btn-close-ticket">टिकट संभाल कर जेब में रखें (Keep Ticket)</button>
+            </div>
+        </div>
+
+        <!-- 1971 Military Field Binoculars View Modal -->
+        <div class="binocular-overlay hidden" id="binocular-modal">
+            <div class="binocular-mask">
+                <div class="reticle-readout">
+                    MIL-GRID 7x50 FIELD GLASS<br>
+                    AZIMUTH: 284° WEST<br>
+                    SECTOR: BORDER PILLAR 638
+                </div>
+                <div class="reticle-center"></div>
+                <div class="reticle-crosshair-h"></div>
+                <div class="reticle-crosshair-v"></div>
+                <div id="binocular-tank-target">
+                    <div class="bino-tank-column">
+                        <div class="bino-tank-unit bino-tank-lead">
+                            <div class="bino-beam"></div>
+                            <img src="assets/pack/vehicles/type59_hull.png" class="bino-hull" alt="Type-59 Tank">
+                            <img src="assets/pack/vehicles/type59_turret.png" class="bino-turret" alt="Type-59 Turret">
+                            <img src="assets/pack/vehicles/fuel_drum.png" class="bino-drum" alt="External Fuel Drum">
+                        </div>
+                        <div class="bino-tank-unit bino-tank-wing">
+                            <div class="bino-beam"></div>
+                            <img src="assets/pack/vehicles/type59_hull.png" class="bino-hull" alt="Type-59 Tank 2">
+                            <img src="assets/pack/vehicles/type59_turret.png" class="bino-turret" alt="Type-59 Turret 2">
+                        </div>
+                        <div class="bino-tank-unit bino-tank-rear">
+                            <img src="assets/pack/vehicles/type59_hull.png" class="bino-hull" alt="Type-59 Tank 3">
+                        </div>
+                    </div>
+                    <div class="bino-reticle-tag">ARMOR DETECTED · 45+ TYPE-59 &amp; SHERMAN · BEARING 085° E</div>
+                </div>
+                <div class="binocular-footer">
+                    <div id="binocular-prompt">रेगिस्तान के छोर पर नजर रखें...</div>
+                    <button class="modal-close-btn" id="btn-close-binocular">दूरबीन नीचे करें (Lower Binoculars)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo / Full Campaign Ending Screen -->
+        <div id="ending-modal" class="hidden">
+            <div class="ending-title" id="ending-title-text">A SOLDIER'S PROMISE KEPT</div>
+            <div class="ending-location" id="ending-location-text">Battle of Longewala · 4–5 December 1971</div>
+            <div class="ending-desc" id="ending-desc-text">
+                Dedicated to the 120 soldiers of 23 Punjab and BSF at the Battle of Longewala (1971).<br><br>
+                They gave up their tomorrow for our today.
+            </div>
+            <div class="ending-btn-group">
+                <button class="primary-btn" id="btn-restart-demo">फिर से खेलें (Play Campaign Again)</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Core Scripts in Exact Order -->
+    <script src="lib/phaser.min.js"></script>
+    <script src="src/save-system.js"></script>
+    <script src="src/inventory.js"></script>
+    <script src="src/camera.js"></script>
+    <script src="src/cutscene.js"></script>
+    <script src="src/interaction.js"></script>
+    <script src="src/audio.js"></script>
+    <script src="src/textures.js"></script>
+    <script src="src/player.js"></script>
+    <script src="src/enemy.js"></script>
+    <script type="module" src="src/game.js"></script>
+
+    <!-- UI Handlers -->
+    <script>
+        const restoreCanvasFocus = (btn) => {
+            if (btn && typeof btn.blur === 'function') btn.blur();
+            const canvas = document.querySelector('#game-container canvas');
+            if (canvas) {
+                if (!canvas.hasAttribute('tabindex')) canvas.setAttribute('tabindex', '0');
+                canvas.focus({ preventScroll: true });
+            } else {
+                window.focus();
+            }
+        };
+
+        // Campaign Mission Selector Toggle
+        const missionsBtn = document.getElementById('btn-missions');
+        if (missionsBtn) {
+            missionsBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                restoreCanvasFocus(missionsBtn);
+                if (window.cutsceneManager) {
+                    const cur = (window.missionManager && typeof window.missionManager.getCurrentMission === 'function' && window.missionManager.getCurrentMission())
+                        ? window.missionManager.getCurrentMission().id
+                        : (window.missionManager && window.missionManager.currentMission ? window.missionManager.currentMission.id : 1);
+                    window.cutsceneManager.openCampaignMenu(cur, (mNum) => {
+                        if (window.gameScene && window.gameScene.jumpToMission) {
+                            window.gameScene.jumpToMission(mNum);
+                        }
+                        restoreCanvasFocus();
+                    });
+                }
+            });
+        }
+
+        // Audio Toggle
+        const audioBtn = document.getElementById('btn-audio');
+        audioBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.soundEngine) {
+                const muted = window.soundEngine.toggleMute();
+                audioBtn.textContent = muted ? '🔇 AUDIO: MUTED' : '🔊 AUDIO: ON';
+            }
+            restoreCanvasFocus(audioBtn);
+        });
+
+        // Fullscreen Toggle
+        const fsBtn = document.getElementById('btn-fullscreen');
+        fsBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            const wrapper = document.getElementById('game-wrapper');
+            if (!document.fullscreenElement) {
+                if (wrapper.requestFullscreen) wrapper.requestFullscreen();
+            } else {
+                if (document.exitFullscreen) document.exitFullscreen();
+            }
+            restoreCanvasFocus(fsBtn);
+        });
+
+        // Advance Dialogue on Dialogue Box Click
+        document.getElementById('dialogue-box').addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.dialogueManager && window.dialogueManager.isActive) {
+                window.dialogueManager.advance();
+            }
+        });
+
+        // Focus game canvas cleanly on click & blur any HTML button holding Spacebar focus
+        const wrapper = document.getElementById('game-wrapper');
+        if (wrapper) {
+            wrapper.addEventListener('click', (e) => {
+                if (e.target && e.target.closest && (e.target.closest('button') || e.target.closest('.modal-overlay'))) {
+                    return;
+                }
+                restoreCanvasFocus(document.activeElement);
+            });
+        }
+
+        // Restart Demo
+        document.getElementById('btn-restart-demo').addEventListener('click', () => {
+            if (window.saveSystem) window.saveSystem.reset();
+            window.location.reload();
+        });
+    </script>
+</body>
+</html>

@@ -1,9 +1,8 @@
 {
-  "cleanUrls": true,
+  "outputDirectory": "public",
   "rewrites": [
     { "source": "/game", "destination": "/game.html" },
-    { "source": "/play", "destination": "/game.html" },
-    { "source": "/download.html", "destination": "/index.html" }
+    { "source": "/play", "destination": "/game.html" }
   ],
   "redirects": [
     {
