@@ -97,3 +97,4 @@ This repository includes a pre-configured `vercel.json`:
 Dedicated in reverent tribute to **Major Kuldip Singh Chandpuri (MVC)**, **Subedar Bhairon Singh (SM)**, and the 120 brave soldiers of **'A' Company, 23rd Battalion, The Punjab Regiment** who stood unconquered at Longewala on 04–05 December 1971.
 
 *Jai Hind!*
+
