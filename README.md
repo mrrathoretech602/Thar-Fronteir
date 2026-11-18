@@ -1,5 +1,6 @@
 # 🇮🇳 THAR FRONTIER: A SOLDIER'S PROMISE · 1971
-### *23rd Battalion, The Punjab Regiment · Battle of Longewala, Rajasthan*
+### *A Cinematic Indian Army 2.5D PC Game by Mr. Rathore*
+#### *23rd Battalion, The Punjab Regiment · Battle of Longewala, Rajasthan*
 
 [![Vercel Deployment](https://img.shields.io/badge/Vercel-Deployed-000000?style=for-the-badge&logo=vercel&logoColor=white)](https://vercel.com)
 [![Platform](https://img.shields.io/badge/Platform-Windows%20PC%20%7C%20Web%20Browser-0078D6?style=for-the-badge&logo=windows&logoColor=white)](#)
@@ -96,5 +97,5 @@ This repository includes a pre-configured `vercel.json`:
 
 Dedicated in reverent tribute to **Major Kuldip Singh Chandpuri (MVC)**, **Subedar Bhairon Singh (SM)**, and the 120 brave soldiers of **'A' Company, 23rd Battalion, The Punjab Regiment** who stood unconquered at Longewala on 04–05 December 1971.
 
-*Jai Hind!*
+*Developed with Pride by **Mr. Rathore** for Indian Gaming · Jai Hind! 🇮🇳*
 
