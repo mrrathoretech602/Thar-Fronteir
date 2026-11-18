@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "node server.js",
+    "build": "echo Static site ready",
     "desktop": "electron .",
     "package:win": "electron-packager . \"TharFrontier1971\" --platform=win32 --arch=x64 --out=dist --overwrite --icon=assets/app_icon.ico --ignore=\"^/(dist|\\.git|Assets_Pack_Download)\""
   },
