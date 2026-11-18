@@ -71,8 +71,10 @@ const server = http.createServer((req, res) => {
         }
     }
 
-    // Default route
+    // Default and Named Routes
     if (reqUrl === '/') reqUrl = '/index.html';
+    if (reqUrl === '/game' || reqUrl === '/play') reqUrl = '/game.html';
+    if (reqUrl === '/download.html') reqUrl = '/index.html';
 
     const filePath = path.join(__dirname, reqUrl);
     const ext = path.extname(filePath).toLowerCase();
@@ -116,13 +118,13 @@ const server = http.createServer((req, res) => {
 });
 
 server.listen(PORT, () => {
-    const gameUrl = `http://localhost:${PORT}/`;
-    const siteUrl = `http://localhost:${PORT}/download.html`;
+    const siteUrl = `http://localhost:${PORT}/`;
+    const gameUrl = `http://localhost:${PORT}/game.html`;
     console.log(`\n======================================================`);
     console.log(`🇮🇳 THAR FRONTIER: A SOLDIER'S PROMISE · 1971`);
     console.log(`⚔️ Longewala, Jaisalmer, Rajasthan · Cinematic 2.5D`);
-    console.log(`🌐 Web Game:         ${gameUrl}`);
-    console.log(`🚀 Download Website: ${siteUrl}`);
+    console.log(`🚀 Official Website: ${siteUrl}`);
+    console.log(`🌐 Playable Web Game: ${gameUrl}`);
     console.log(`📦 Direct PC App (.exe): http://localhost:${PORT}/download`);
     console.log(`======================================================\n`);
 

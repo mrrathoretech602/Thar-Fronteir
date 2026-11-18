@@ -36,7 +36,7 @@ function startInternalServer() {
         const createServerInstance = (port) => {
             const server = http.createServer((req, res) => {
                 let reqUrl = decodeURIComponent(req.url.split('?')[0]);
-                if (reqUrl === '/') reqUrl = '/index.html';
+                if (reqUrl === '/') reqUrl = '/game.html';
 
                 const filePath = path.join(__dirname, reqUrl);
                 const ext = path.extname(filePath).toLowerCase();
@@ -103,7 +103,7 @@ function createWindow() {
         }
     });
 
-    mainWindow.loadURL(`http://127.0.0.1:${serverPort}`);
+    mainWindow.loadURL(`http://127.0.0.1:${serverPort}/game.html`);
 
     mainWindow.once('ready-to-show', () => {
         mainWindow.show();

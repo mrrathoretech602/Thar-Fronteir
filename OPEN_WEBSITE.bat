@@ -5,7 +5,7 @@ echo   THAR FRONTIER: A SOLDIER'S PROMISE · 1971
 echo   Opening Official Showcase & Download Portal...
 echo ========================================================
 echo.
-start http://localhost:3000/download.html
+start http://localhost:3000/
 node server.js
 pause
 

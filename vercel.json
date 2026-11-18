@@ -4,11 +4,11 @@
   "routes": [
     {
       "src": "/game",
-      "dest": "/index.html"
+      "dest": "/game.html"
     },
     {
       "src": "/play",
-      "dest": "/index.html"
+      "dest": "/game.html"
     },
     {
       "src": "/download",
@@ -25,9 +25,12 @@
       }
     },
     {
+      "src": "/download.html",
+      "dest": "/index.html"
+    },
+    {
       "src": "/",
-      "dest": "/download.html"
+      "dest": "/index.html"
     }
   ]
 }
-
