@@ -1,0 +1,31 @@
+{
+  "name": "thar-frontier-1971",
+  "version": "1.0.0",
+  "description": "THAR FRONTIER: A SOLDIER'S PROMISE · 1971 - Indian Army Cinematic 2.5D Story Game (Longewala, Rajasthan)",
+  "main": "electron-main.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "desktop": "electron .",
+    "package:win": "electron-packager . \"TharFrontier1971\" --platform=win32 --arch=x64 --out=dist --overwrite --icon=assets/app_icon.ico --ignore=\"^/(dist|\\.git|Assets_Pack_Download)\""
+  },
+  "keywords": [
+    "game",
+    "2.5d",
+    "indian-army",
+    "longewala-1971",
+    "thar-desert",
+    "tanot-mata",
+    "cinematic",
+    "story-game",
+    "phaser3"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "^45.3.4",
+    "electron-packager": "^17.1.2",
+    "phaser": "^3.88.2"
+  }
+}

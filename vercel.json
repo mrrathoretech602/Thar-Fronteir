@@ -1,0 +1,32 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "routes": [
+    {
+      "src": "/game",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/play",
+      "dest": "/index.html"
+    },
+    {
+      "src": "/download",
+      "status": 302,
+      "headers": {
+        "Location": "https://github.com/mrrathoretech602/Thar-Fronteir/releases/latest/download/TharFrontier1971_Setup.exe"
+      }
+    },
+    {
+      "src": "/download-exe",
+      "status": 302,
+      "headers": {
+        "Location": "https://github.com/mrrathoretech602/Thar-Fronteir/releases/latest/download/TharFrontier1971_Setup.exe"
+      }
+    },
+    {
+      "src": "/",
+      "dest": "/download.html"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+# Node Dependencies
+node_modules/
+
+# Production Builds, Binaries & Packaged Executables
+# (Ignored to keep repository lightweight and protect against GitHub 100MB file limit)
+dist/
+build/
+bin/
+obj/
+*.exe
+*.zip
+*.tar
+*.gz
+*.cab
+
+# Logs and Temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.tmp
+
+# Operating System Files
+Thumbs.db
+.DS_Store
+
+# Editor / IDE configuration
+.vscode/
+.idea/
+*.suo
+*.user
+
+# Environment variables
+.env
+.env.local
+.env.*.local
